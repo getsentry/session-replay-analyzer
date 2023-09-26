@@ -10,3 +10,13 @@ describe('healthcheck', () => {
     })
   })
 })
+
+describe('accessibility analysis endpoint', () => {
+  describe('POST', () => {
+    it('Responds 201 created', async () => {
+      const resp = await supertest(app).get('/api/0/analyze/accessibility').send()
+      expect(resp.status).toBe(201)
+      expect(resp.text).toBe('OK')
+    })
+  })
+})

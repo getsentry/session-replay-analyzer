@@ -9,4 +9,8 @@ app.get('/api/healthcheck', (req, res) => {
   res.status(200).send('OK')
 })
 
+app.get('/api/:version/analyze/accessibility', (req, res) => {
+  res.status(201).send('OK')
+})
+
 export { app }
