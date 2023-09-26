@@ -1,0 +1,22 @@
+name: build
+on: [push]
+
+jobs:
+  build:
+    name: build
+    runs-on: node:18-bookworm-slim
+    steps:
+      - uses: actions/checkout@v2
+      - run: npm install
+      - run: npm test
+      - if: ${{ failure() }}
+        uses: actions/upload-artifact@v2
+        with:
+          name: snapshot diffs
+          path: tests/__image_snapshots__
+      - run: npm build
+      - uses: actions/upload-artifact@v2
+        with:
+          name: ${{ github.sha }}
+          path: |
+            ${{ github.workspace }}/*.tgz
