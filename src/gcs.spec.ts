@@ -3,8 +3,8 @@ import { downloadFromFilename, downloadFromFilenames } from './gcs'
 
 const storage = new MockStorage()
 
-describe('gcs integration', () => {
-  describe('GET filename', () => {
+describe('gcs', () => {
+  describe('downloadFromFilename', () => {
     it('Responds string when exists', async () => {
       await storage.bucket('bucket_name').file('a').save('test')
       expect(await downloadFromFilename(storage, 'a')).toBe('test')
@@ -14,7 +14,7 @@ describe('gcs integration', () => {
       expect(response).toBe('[]')
     })
   })
-  describe('GET filenames', () => {
+  describe('downloadFromFilenames', () => {
     it('Responds array string when exists', async () => {
       await storage.bucket('bucket_name').file('a').save('test')
       await storage.bucket('bucket_name').file('b').save('other')
