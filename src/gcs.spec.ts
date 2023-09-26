@@ -22,5 +22,9 @@ describe('gcs integration', () => {
       const response = await downloadFromFilenames(storage, ['a', 'b'])
       expect(response).toStrictEqual(['test', 'other'])
     })
+    it('Responds array string when not exists', async () => {
+      const response = await downloadFromFilenames(storage, ['y', 'z'])
+      expect(response).toStrictEqual(['[]', '[]'])
+    })
   })
 })
