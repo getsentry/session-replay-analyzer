@@ -1,8 +1,8 @@
-import rrwebPlayer from 'rrweb-player'
+import Player from 'rrweb-player'
 
 // Requires at least two events to run.
 function playEvents (events: any[]): void {
-  const player = new rrwebPlayer({
+  const player = new Player({
     target: document.body,
     props: {
       events,
