@@ -1,0 +1,13 @@
+{
+  "compilerOptions": {
+    "module": "es2015",
+    "esModuleInterop": true,
+    "target": "ES2015",
+    "moduleResolution": "Bundler",
+    "sourceMap": true,
+    "outDir": "dist",
+    "strictNullChecks": true,
+    "allowSyntheticDefaultImports": true
+  },
+  "lib": ["es2015"]
+}
