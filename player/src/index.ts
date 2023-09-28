@@ -2,6 +2,9 @@ import Player from 'rrweb-player'
 
 // Requires at least two events to run.
 function playEvents (events: any[]): void {
+  // Reset inner body for subsequent runs.
+  document.body.innerHTML = ''
+
   const player = new Player({
     target: document.body,
     props: {
