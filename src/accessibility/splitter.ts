@@ -16,7 +16,9 @@ function split (segments: string[]): any[] {
           }
         })
       }
-    } catch (e) {}
+    } catch (e) {
+      console.log(e)
+    }
   })
 
   return events

@@ -1,8 +1,7 @@
-import * as playwright from 'playwright'
+import type * as playwright from 'playwright'
 import path from 'path'
 
-async function newPlayerPage (): Promise<playwright.Page> {
-  const browser = await playwright.chromium.launch({ headless: true })
+async function newPlayerPage (browser: playwright.Browser): Promise<playwright.Page> {
   const context = await browser.newContext()
   const page = await context.newPage()
   await gotoRRWebPlayer(page)

@@ -1,4 +1,25 @@
-import { coerceTimestamp, processViolations } from './index'
+import * as playwright from 'playwright'
+import { newPlayerPage } from '../player'
+import { MockStorage } from 'mock-gcs'
+import { coerceTimestamp, runA11Y } from './index'
+import fs from 'fs'
+import path from 'path'
+
+const storage = new MockStorage()
+
+describe('runA11Y', () => {
+  it('works', async () => {
+    const data = fs.readFileSync(path.join(__dirname, '../../mock/rrweb-sentry.json'))
+    await storage.bucket('bucket_name').file('test.json').save(data)
+
+    const browser = await playwright.chromium.launch({ headless: true })
+    const page = await newPlayerPage(browser)
+    const result = await runA11Y(storage, page, ['test.json'])
+    await browser.close()
+
+    expect(result.length).toBe(2)
+  })
+})
 
 describe('coerceTimestamp', () => {
   it('succeeds no matter what', async () => {
