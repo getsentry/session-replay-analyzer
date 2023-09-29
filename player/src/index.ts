@@ -1,17 +1,13 @@
-import rrwebPlayer from 'rrweb-player'
+import { Replayer } from '@sentry-internal/rrweb'
 
 // Requires at least two events to run.
 function playEvents (events: any[]): void {
-  const player = new rrwebPlayer({
-    target: document.body,
-    props: {
-      events,
-      speed: 999999,
-      speedOption: [999999],
-      skipInactive: true,
-      showWarning: false,
-      loadTimeout: 1000 // timeout to load the stylesheet(s)
-    }
+  const player = new Replayer(events, {
+    root: document.body,
+    speed: 999999,
+    skipInactive: true,
+    showWarning: false,
+    loadTimeout: 1000 // timeout to load the stylesheet(s)
   })
   player.play()
 }
