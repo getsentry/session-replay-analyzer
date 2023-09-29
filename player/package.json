@@ -31,7 +31,7 @@
     "typescript": "^5.2.2"
   },
   "dependencies": {
-    "rrweb": "^2.0.0-alpha.4",
+    "@sentry-internal/rrweb": "^2.0.0",
     "rrweb-player": "^1.0.0-alpha.4"
   }
 }
