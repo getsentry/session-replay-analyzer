@@ -2,7 +2,6 @@
   "name": "session-replay-analyzer",
   "version": "1.0.0",
   "description": "Session Replay analysis service.",
-  "type": "module",
   "main": "dist/index.js",
   "scripts": {
     "build": "tsc && npm run build --prefix player && cp player/dist/* dist/",
