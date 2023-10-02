@@ -1,8 +1,15 @@
 import { Storage } from '@google-cloud/storage'
-import { type IStorage } from 'mock-gcs'
+import { MockStorage, type IStorage } from 'mock-gcs'
 
 const bucket = 'bucket_name'
-const storage = new Storage()
+
+function newStorage(): IStorage {
+  if (process.env.NODE_ENV == "test") {
+    return new MockStorage()
+  } else {
+    return new Storage()
+  }
+}
 
 async function downloadFromFilenames (storage: IStorage, filenames: string[]): Promise<string[]> {
   return await Promise.all(filenames.map(async (f) => await downloadFromFilename(storage, f)))
@@ -17,4 +24,4 @@ async function downloadFromFilename (storage: IStorage, filename: string): Promi
   }
 }
 
-export { downloadFromFilename, downloadFromFilenames, storage }
+export { downloadFromFilename, downloadFromFilenames, newStorage }

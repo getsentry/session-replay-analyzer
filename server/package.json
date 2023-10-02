@@ -4,8 +4,8 @@
   "description": "Session Replay analysis service.",
   "main": "dist/index.js",
   "scripts": {
-    "build": "tsc && npm run build --prefix player && cp player/dist/* dist/",
-    "start": "tsc && node dist/index.js",
+    "build": "tsc && npm run build --prefix ../player && cp ../player/dist/index.html dist/index.html && cp ../player/dist/player.js dist/player.js",
+    "start": "tsc && node dist/src/index.js",
     "lint": "eslint . --ext .ts",
     "test": "jest",
     "watch": "tsc-watch"
