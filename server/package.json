@@ -2,11 +2,10 @@
   "name": "session-replay-analyzer",
   "version": "1.0.0",
   "description": "Session Replay analysis service.",
-  "type": "module",
   "main": "dist/index.js",
   "scripts": {
-    "build": "tsc",
-    "start": "tsc && node dist/index.js",
+    "build": "tsc && npm run build --prefix ../player && cp ../player/dist/index.html dist/index.html && cp ../player/dist/player.js dist/player.js",
+    "start": "tsc && node dist/src/index.js",
     "lint": "eslint . --ext .ts",
     "test": "jest",
     "watch": "tsc-watch"
@@ -35,8 +34,11 @@
     "typescript": "^5.2.2"
   },
   "dependencies": {
+    "@axe-core/playwright": "^4.7.3",
     "@google-cloud/storage": "^7.1.0",
+    "@playwright/test": "^1.38.1",
     "express": "^4.17.1",
-    "mock-gcs": "^1.1.0"
+    "mock-gcs": "^1.1.0",
+    "playwright": "^1.38.1"
   }
 }
