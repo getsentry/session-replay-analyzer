@@ -34,7 +34,10 @@ app.post('/api/:version/analyze/accessibility', async (req: TypedRequest<Analyze
   const browser = await playwright.chromium.launch({ headless: true })
   const page = await newPlayerPage(browser)
   const results = await runA11Y(storage, page, body.data.filenames)
-  res.status(201).send(JSON.stringify(results))
+  res.status(201).send(JSON.stringify({
+    meta: {total: results.length},
+    data: results
+  }))
   await browser.close()
 })
 

@@ -19,7 +19,7 @@ describe('accessibility analysis endpoint', () => {
         .send({data: {filenames: ["a"]}})
 
       expect(resp.status).toBe(201)
-      expect(resp.text).toBe('[]')
+      expect(resp.text).toBe('{"meta":{"total":0},"data":[]}')
     })
   })
 })
