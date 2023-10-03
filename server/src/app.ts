@@ -5,6 +5,8 @@ import { runA11Y } from './accessibility';
 import { newPlayerPage } from './player';
 import { newStorage } from './gcs';
 
+const storage = newStorage()
+
 const app = express()
 app.use(express.json())
 
@@ -30,7 +32,6 @@ interface AnalyzeAcessibilityBodyData {
 
 app.post('/api/:version/analyze/accessibility', async (req: TypedRequest<AnalyzeAcessibilityBody>, res: Response) => {
   const body = req.body
-  const storage = newStorage()
   const browser = await playwright.chromium.launch({ headless: true })
   const page = await newPlayerPage(browser)
   const results = await runA11Y(storage, page, body.data.filenames)
@@ -41,4 +42,4 @@ app.post('/api/:version/analyze/accessibility', async (req: TypedRequest<Analyze
   await browser.close()
 })
 
-export { app }
+export { app, storage }

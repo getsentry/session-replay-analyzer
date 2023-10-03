@@ -1,5 +1,7 @@
+import fs from 'fs'
+import path from 'path'
 import supertest from 'supertest'
-import { app } from './app'
+import { app, storage } from './app'
 
 describe('healthcheck', () => {
   describe('GET /api/healthcheck', () => {
@@ -14,12 +16,18 @@ describe('healthcheck', () => {
 describe('accessibility analysis endpoint', () => {
   describe('POST', () => {
     it('Responds 201 created', async () => {
+      const data = fs.readFileSync(path.join(__dirname, '../mock/rrweb-sentry.json'))
+      await storage.bucket('bucket_name').file('test.json').save(data)
+
       const resp = await supertest(app)
         .post('/api/0/analyze/accessibility')
-        .send({data: {filenames: ["a"]}})
+        .send({data: {filenames: ["test.json"]}})
 
       expect(resp.status).toBe(201)
-      expect(resp.text).toBe('{"meta":{"total":0},"data":[]}')
+
+      const response = JSON.parse(resp.text)
+      expect(response.meta).toEqual({total: 2})
+      expect(response.data.length).toEqual(2)
     })
   })
 })
