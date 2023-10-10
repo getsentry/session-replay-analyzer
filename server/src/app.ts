@@ -1,9 +1,8 @@
-import express from 'express'
+import express, { type Request, type Response } from 'express'
 import * as playwright from 'playwright'
-import { Request, Response } from 'express';
-import { runA11Y } from './accessibility';
-import { newPlayerPage } from './player';
-import { newStorage } from './gcs';
+import { runA11Y } from './accessibility'
+import { newPlayerPage } from './player'
+import { newStorage } from './gcs'
 
 const storage = newStorage()
 
@@ -14,7 +13,7 @@ app.get('/', (req, res) => {
   res.send('Hello World!')
 })
 
-app.get('/api/healthcheck', (req, res) => {
+app.get('/api/healthcheck/live', (req, res) => {
   res.status(200).send('OK')
 })
 
@@ -36,7 +35,7 @@ app.post('/api/:version/analyze/accessibility', async (req: TypedRequest<Analyze
   const page = await newPlayerPage(browser)
   const results = await runA11Y(storage, page, body.data.filenames)
   res.status(201).send(JSON.stringify({
-    meta: {total: results.length},
+    meta: { total: results.length },
     data: results
   }))
   await browser.close()
