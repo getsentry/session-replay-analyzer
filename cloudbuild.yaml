@@ -5,6 +5,6 @@ steps:
         "build",
         "-t",
         "us.gcr.io/internal-sentry/session-replay-analyzer:$COMMIT_SHA",
-        "session-replay-analyzer",
+        ".",
       ]
 images: ["us.gcr.io/internal-sentry/session-replay-analyzer:$COMMIT_SHA"]
