@@ -8,13 +8,10 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - uses: volta-cli/action@v1
-      - run: npm install --prefix player
-      - run: npm run build --prefix player
-      - run: npm install --prefix server
-      - run: npm run build --prefix server
-      - run: mv player/dist/index.html server/dist/index.html
-      - run: mv player/dist/player.js server/dist/player.js
-      - run: npm run test --prefix server src/app.spec.ts
+      - run: npm install
+      - run: npm run build
+      - run: npm run test
+      - run: npm run test-playwright
       - if: ${{ failure() }}
         uses: actions/upload-artifact@v2
         with:

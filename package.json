@@ -4,10 +4,11 @@
   "description": "Session Replay analysis service.",
   "main": "dist/index.js",
   "scripts": {
-    "build": "tsc",
-    "start": "tsc && node dist/src/index.js",
+    "build": "tsc && cp index.html dist/index.html && cp player.js dist/player.js",
+    "start": "node dist/src/index.js",
     "lint": "eslint . --ext .ts",
-    "test": "jest",
+    "test": "jest src/tests",
+    "test-playwright": "npx playwright test src/playwright_tests",
     "watch": "tsc-watch"
   },
   "jest": {
