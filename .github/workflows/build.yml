@@ -8,6 +8,7 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - uses: volta-cli/action@v1
+      - run: rm -rf player
       - run: npm install
       - run: npm run build
       - run: npm run test
