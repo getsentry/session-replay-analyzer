@@ -40,5 +40,8 @@
     "mock-gcs": "^1.1.0",
     "playwright": "^1.38.1",
     "typescript": "^5.2.2"
+  },
+  "volta": {
+    "node": "18.18.1"
   }
 }
