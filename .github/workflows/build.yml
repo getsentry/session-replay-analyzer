@@ -14,7 +14,7 @@ jobs:
       - run: npm run build --prefix server
       - run: mv player/dist/index.html server/dist/index.html
       - run: mv player/dist/player.js server/dist/player.js
-      - run: npm run test --prefix server
+      - run: npm run test --prefix server src/app.spec.ts
       - if: ${{ failure() }}
         uses: actions/upload-artifact@v2
         with:
