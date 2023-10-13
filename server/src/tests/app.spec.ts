@@ -1,7 +1,7 @@
 import fs from 'fs'
 import path from 'path'
 import supertest from 'supertest'
-import { app, storage } from './app'
+import { app, storage } from '../app'
 
 describe('healthcheck', () => {
   describe('GET /api/healthcheck/live', () => {
@@ -16,7 +16,7 @@ describe('healthcheck', () => {
 describe('accessibility analysis endpoint', () => {
   describe('POST', () => {
     it('Responds 201 created', async () => {
-      const data = fs.readFileSync(path.join(__dirname, '../mock/rrweb-sentry.json'))
+      const data = fs.readFileSync(path.join(__dirname, '../../mock/rrweb-sentry.json'))
       await storage.bucket('bucket_name').file('test.json').save(data)
 
       const resp = await supertest(app)

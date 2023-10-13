@@ -1,4 +1,4 @@
-import { gotoRRWebPlayer, playRRWebEvents } from './player'
+import { gotoRRWebPlayer, playRRWebEvents } from '../player'
 import { test, expect } from '@playwright/test'
 
 test('calling playEvents create a new player', async ({ page }) => {
