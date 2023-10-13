@@ -11,6 +11,7 @@ jobs:
       - run: rm -rf player
       - run: npm install
       - run: npm run build
+      - run: cp -r mock dist/mock
       - run: npm run test
       - run: npm run test-playwright
       - if: ${{ failure() }}
