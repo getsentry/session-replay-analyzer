@@ -7,14 +7,22 @@ jobs:
     runs-on: node:18-bookworm-slim
     steps:
       - uses: actions/checkout@v2
-      - run: npm install
-      - run: npm test
+      - run: npm install --prefix player
+      - run: npm run build --prefix player
+      - run: npm test --prefix player
       - if: ${{ failure() }}
         uses: actions/upload-artifact@v2
         with:
           name: snapshot diffs
           path: tests/__image_snapshots__
-      - run: npm build
+      - run: npm install --prefix server
+      - run: npm run build --prefix server
+      - run: npm test --prefix server
+      - if: ${{ failure() }}
+        uses: actions/upload-artifact@v2
+        with:
+          name: snapshot diffs
+          path: tests/__image_snapshots__
       - uses: actions/upload-artifact@v2
         with:
           name: ${{ github.sha }}
