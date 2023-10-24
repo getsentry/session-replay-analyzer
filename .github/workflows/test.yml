@@ -21,9 +21,8 @@ jobs:
         run: npm run test
       - name: Run Playwright tests
         run: npm run test-playwright
-      - uses: actions/upload-artifact@v3
-        if: always()
+      - if: ${{ failure() }}
+        uses: actions/upload-artifact@v2
         with:
-          name: playwright-report
-          path: playwright-report/
-          retention-days: 30
+          name: snapshot diffs
+          path: tests/__image_snapshots__
