@@ -1,0 +1,8 @@
+environments:
+    replay-analyzer-env:
+        environment_variables:
+            # These values can be customized per-pipeline run
+            # by clicking the run button with a plus sign.
+            # If you'd like to generate encrypted values,
+            # please refer to the Quickstart Guide.
+            EXAMPLE_ENV_VAR: Example environment variable
