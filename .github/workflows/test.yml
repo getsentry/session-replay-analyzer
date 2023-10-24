@@ -4,9 +4,12 @@ on:
     branches: [main, master]
   pull_request:
     branches: [main, master]
+env:
+  PLAYWRIGHT_SKIP_BROWSER_DOWNLOAD: 1 # Skip downloading during yarn install
+  PLAYWRIGHT_BROWSERS_PATH: 0 # Places binaries to node_modules/@playwright/test
 jobs:
   test:
-    timeout-minutes: 1
+    timeout-minutes: 5
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
@@ -17,6 +20,10 @@ jobs:
         run: npm ci
       - name: Install Playwright Browsers
         run: npx playwright install-deps chromium
+      - name: Install App
+        run: |
+          npm install
+          npx install playwright
       - name: Run Jest tests
         run: npm run test
       - name: Run Playwright tests
