@@ -4,17 +4,21 @@ on: [push]
 jobs:
   build:
     name: build
-    runs-on: node:18-bookworm-slim
+    runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
+      - uses: volta-cli/action@v1
+      - run: rm -rf player
       - run: npm install
-      - run: npm test
+      - run: npx playwright install-deps chromium
+      - run: npm run build
+      - run: npm run test
+      - run: npm run test-playwright
       - if: ${{ failure() }}
         uses: actions/upload-artifact@v2
         with:
           name: snapshot diffs
           path: tests/__image_snapshots__
-      - run: npm build
       - uses: actions/upload-artifact@v2
         with:
           name: ${{ github.sha }}

@@ -1,5 +1,5 @@
 import { MockStorage } from 'mock-gcs'
-import { downloadFromFilename, downloadFromFilenames } from './gcs'
+import { downloadFromFilename, downloadFromFilenames } from '../gcs'
 
 const storage = new MockStorage()
 

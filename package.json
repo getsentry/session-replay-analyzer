@@ -4,10 +4,11 @@
   "description": "Session Replay analysis service.",
   "main": "dist/index.js",
   "scripts": {
-    "build": "tsc",
-    "start": "tsc && node dist/src/index.js",
+    "build": "tsc && cp index.html dist/index.html && cp player.js dist/player.js && cp -r mock dist/mock",
+    "start": "node dist/src/index.js",
     "lint": "eslint . --ext .ts",
-    "test": "jest",
+    "test": "jest src/tests",
+    "test-playwright": "npx playwright test src/playwright_tests",
     "watch": "tsc-watch"
   },
   "jest": {
@@ -40,5 +41,8 @@
     "mock-gcs": "^1.1.0",
     "playwright": "^1.38.1",
     "typescript": "^5.2.2"
+  },
+  "volta": {
+    "node": "18.18.1"
   }
 }
