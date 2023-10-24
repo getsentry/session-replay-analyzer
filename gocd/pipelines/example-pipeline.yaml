@@ -3,12 +3,12 @@
 # - https://www.notion.so/sentry/GoCD-New-Service-Quickstart-6d8db7a6964049b3b0e78b8a4b52e25d
 format_version: 10
 environments:
-    # Must start with "${SERVICE}".
-    ${SERVICE}-env:
+    # Must start with "replay-analyzer".
+    replay-analyzer-env:
         pipelines:
-            - ${SERVICE}-pipeline
+            - replay-analyzer-pipeline
 pipelines:
-    ${SERVICE}-pipeline:
+    replay-analyzer-pipeline:
         environment_variables:
             # These values can be customized per-pipeline run
             # by clicking the run button with a plus sign.
@@ -17,14 +17,14 @@ pipelines:
             EXAMPLE_PIPELINE_VAR: "Example pipeline variable"
             # Read access to private repositories for the GoCD agent.
             GITHUB_TOKEN: "{{SECRET:[devinfra-github][token]}}"
-        # Must start with "${SERVICE}".
-        group: ${SERVICE}
+        # Must start with "replay-analyzer".
+        group: replay-analyzer
         lock_behavior: unlockWhenFinished
         materials:
-            ${SERVICE}_repo:
-                git: git@github.com:getsentry/${SERVICE}.git
+            replay-analyzer_repo:
+                git: git@github.com:getsentry/replay-analyzer.git
                 shallow_clone: true
-                destination: ${SERVICE}
+                destination: replay-analyzer
                 branch: main
         # A pipeline executes stages sequentially.
         stages:
@@ -39,8 +39,8 @@ pipelines:
                   jobs:
                       job_1:
                           timeout: 600 # 10 mins
-                          # Must be exactly "${SERVICE}".
-                          elastic_profile_id: ${SERVICE}
+                          # Must be exactly "replay-analyzer".
+                          elastic_profile_id: replay-analyzer
                           # A job executes tasks sequentially.
                           tasks:
                               - script: |
@@ -52,7 +52,7 @@ pipelines:
                                     echo "EXAMPLE_ENV_VAR => ${EXAMPLE_ENV_VAR}"
                       job_2:
                           timeout: 600
-                          elastic_profile_id: ${SERVICE}
+                          elastic_profile_id: replay-analyzer
                           tasks:
                               # We generally recommend calling a script
                               # in your repository instead of writing
@@ -60,7 +60,7 @@ pipelines:
                               # See the following stage for an example.
                               - script: |
                                     set -ex
-                                    cd "${SERVICE}"
+                                    cd "replay-analyzer"
                                     ls -lah
             - second_stage:
                   approval:
@@ -71,11 +71,11 @@ pipelines:
                   jobs:
                       run-demo-sh:
                           timeout: 600
-                          elastic_profile_id: ${SERVICE}
+                          elastic_profile_id: replay-analyzer
                           tasks:
                               - exec:
                                   # NOTE: the command needs to start with ./
-                                  command: ./${SERVICE}/gocd/pipelines/demo.sh
+                                  command: ./replay-analyzer/gocd/pipelines/demo.sh
                                   arguments:
                                   - foo
                                   - bar

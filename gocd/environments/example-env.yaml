@@ -1,5 +1,5 @@
 environments:
-    ${SERVICE}-env:
+    replay-analyzer-env:
         environment_variables:
             # These values can be customized per-pipeline run
             # by clicking the run button with a plus sign.
