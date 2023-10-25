@@ -7,7 +7,7 @@ COPY . .
 RUN rm -rf player
 
 # Build the server.
-RUN npm install
+RUN npm ci
 RUN npx playwright install-deps chromium
 RUN npm run build
 
