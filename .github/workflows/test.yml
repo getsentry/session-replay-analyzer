@@ -20,10 +20,6 @@ jobs:
         run: npm ci
       - name: Install Playwright Browsers
         run: npx playwright install-deps chromium
-      - name: Install App
-        run: |
-          npm install
-          npx install playwright
       - name: Run Jest tests
         run: npm run test
       - name: Run Playwright tests
