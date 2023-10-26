@@ -3,7 +3,7 @@ name: Validate Deployment Pipelines
 on:
   pull_request:
   push:
-    branches: [master, test-me-*]
+    branches: [main, test-me-*]
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.head_ref || github.run_id }}
@@ -49,6 +49,6 @@ jobs:
           id_token_include_email: true
       - uses: getsentry/action-validate-gocd-pipelines@v1
         with:
-          configrepo: session-replay-analyzer__master
+          configrepo: session-replay-analyzer__main
           gocd_access_token: ${{ secrets.GOCD_ACCESS_TOKEN }}
           google_oidc_token: ${{ steps.auth.outputs.id_token }}
