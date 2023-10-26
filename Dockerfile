@@ -6,7 +6,7 @@ WORKDIR /app
 COPY . .
 
 # Build the server.
-RUN rm -rf docs locust mock player
+RUN rm -rf docs locust player
 RUN npm ci
 RUN npx playwright install --with-deps chromium
 RUN npm run build
