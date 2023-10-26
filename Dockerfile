@@ -4,11 +4,11 @@ ENV NODE_ENV=production
 
 WORKDIR /app
 COPY . .
-RUN rm -rf player
 
 # Build the server.
+RUN rm -rf docs locust player
 RUN npm ci
-RUN npx playwright install-deps chromium
+RUN npx playwright install --with-deps chromium
 RUN npm run build
 
 RUN cp -r node_modules dist/node_modules
