@@ -3,7 +3,7 @@ name: Validate Deployment Pipelines
 on:
   pull_request:
   push:
-    branches: [master, test-me-*]
+    branches: [main, test-me-*]
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.head_ref || github.run_id }}
@@ -25,7 +25,6 @@ jobs:
           filters: |
             gocd:
               - 'gocd/**'
-              - '.github/workflows/validate-pipelines.yml'
 
   validate:
     if: needs.files-changed.outputs.gocd == 'true'
@@ -48,13 +47,8 @@ jobs:
           token_format: "id_token"
           id_token_audience: "610575311308-9bsjtgqg4jm01mt058rncpopujgk3627.apps.googleusercontent.com"
           id_token_include_email: true
-      - uses: getsentry/action-gocd-jsonnet@v1
-        with:
-          jb-install: true
-          jsonnet-dir: gocd/templates
-          generated-dir: gocd/generated-pipelines
       - uses: getsentry/action-validate-gocd-pipelines@v1
         with:
-          configrepo: getsentry__master
+          configrepo: session-replay-analyzer__main
           gocd_access_token: ${{ secrets.GOCD_ACCESS_TOKEN }}
           google_oidc_token: ${{ steps.auth.outputs.id_token }}

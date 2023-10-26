@@ -1,3 +1,6 @@
+# More information on gocd-flavor YAML can be found here:
+# - https://github.com/tomzo/gocd-yaml-config-plugin#pipeline
+# - https://www.notion.so/sentry/GoCD-New-Service-Quickstart-6d8db7a6964049b3b0e78b8a4b52e25d
 format_version: 10
 pipelines:
   deploy-session-replay-analyzer:
@@ -7,6 +10,7 @@ pipelines:
       GKE_REGION: us-central1
       GKE_CLUSTER_ZONE: b
       GKE_BASTION_ZONE: b
+      # Required for checkruns.
       GITHUB_TOKEN: "{{SECRET:[devinfra-github][token]}}"
     group: session-replay-analyzer
     lock_behavior: unlockWhenFinished
@@ -14,7 +18,7 @@ pipelines:
       session-replay-analyzer_repo:
         git: git@github.com:getsentry/session-replay-analyzer.git
         shallow_clone: true
-        branch: main
+        branch: master
         destination: session-replay-analyzer
     stages:
       - checks:
