@@ -30,15 +30,22 @@ interface AnalyzeAcessibilityBodyData {
 }
 
 app.post('/api/:version/analyze/accessibility', async (req: TypedRequest<AnalyzeAcessibilityBody>, res: Response) => {
-  const body = req.body
   const browser = await playwright.chromium.launch({ headless: true })
-  const page = await newPlayerPage(browser)
-  const results = await runA11Y(storage, page, body.data.filenames)
-  res.status(201).send(JSON.stringify({
-    meta: { total: results.length },
-    data: results
-  }))
-  await browser.close()
+
+  try {
+    const body = req.body
+    const page = await newPlayerPage(browser)
+    const results = await runA11Y(storage, page, body.data.filenames)
+    res.status(201).send(JSON.stringify({
+      meta: { total: results.length },
+      data: results
+    }))
+  } catch (e) {
+    console.log(e)
+    res.status(500).send(e.toString())
+  } finally {
+    await browser.close()
+  }
 })
 
 export { app, storage }
