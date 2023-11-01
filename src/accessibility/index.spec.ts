@@ -4,13 +4,14 @@ import { MockStorage } from 'mock-gcs'
 import { coerceTimestamp, runA11Y } from './index'
 import fs from 'fs'
 import path from 'path'
+import {BUCKET_NAME} from '../config'
 
 const storage = new MockStorage()
 
 describe('runA11Y', () => {
   it('works', async () => {
     const data = fs.readFileSync(path.join(__dirname, '../../mock/rrweb-sentry.json'))
-    await storage.bucket('bucket_name').file('test.json').save(data)
+    await storage.bucket(BUCKET_NAME).file('test.json').save(data)
 
     const browser = await playwright.chromium.launch({ headless: true })
     const page = await newPlayerPage(browser)
