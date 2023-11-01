@@ -1,12 +1,13 @@
 import { MockStorage } from 'mock-gcs'
 import { downloadFromFilename, downloadFromFilenames } from '../gcs'
+import {BUCKET_NAME} from '../config'
 
 const storage = new MockStorage()
 
 describe('gcs', () => {
   describe('downloadFromFilename', () => {
     it('Responds string when exists', async () => {
-      await storage.bucket('bucket_name').file('a').save('test')
+      await storage.bucket(BUCKET_NAME).file('a').save('test')
       expect(await downloadFromFilename(storage, 'a')).toBe('test')
     })
     it('Responds string when not exists', async () => {
@@ -16,8 +17,8 @@ describe('gcs', () => {
   })
   describe('downloadFromFilenames', () => {
     it('Responds array string when exists', async () => {
-      await storage.bucket('bucket_name').file('a').save('test')
-      await storage.bucket('bucket_name').file('b').save('other')
+      await storage.bucket(BUCKET_NAME).file('a').save('test')
+      await storage.bucket(BUCKET_NAME).file('b').save('other')
 
       const response = await downloadFromFilenames(storage, ['a', 'b'])
       expect(response).toStrictEqual(['test', 'other'])
