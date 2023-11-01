@@ -1,13 +1,11 @@
 import { app } from './app'
 import * as Sentry from "@sentry/node";
+import {SENTRY_DSN, SENTRY_SAMPLE_RATE} from './config'
 
-const sentry_dsn = process.env.SENTRY_DSN || ""
-const sample_rate = parseFloat(process.env.SENTRY_TRACE_SAMPLE_RATE || "0")
-
-if (sentry_dsn !== "") {
+if (SENTRY_DSN !== "") {
     Sentry.init({
-        dsn: sentry_dsn,
-        tracesSampleRate: sample_rate,
+        dsn: SENTRY_DSN,
+        tracesSampleRate: SENTRY_SAMPLE_RATE,
     });
 }
 
