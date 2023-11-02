@@ -3,7 +3,7 @@ name: Validate Deployment Pipelines
 on:
   pull_request:
   push:
-    branches: [main, test-me-*]
+    branches: [main, master]
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.head_ref || github.run_id }}
