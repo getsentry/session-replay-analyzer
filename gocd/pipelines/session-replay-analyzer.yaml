@@ -15,7 +15,7 @@ pipelines:
     group: session-replay-analyzer
     lock_behavior: unlockWhenFinished
     materials:
-      session-replay-analyzer_repo:
+      session_replay_analyzer_repo:
         git: git@github.com:getsentry/session-replay-analyzer.git
         shallow_clone: true
         branch: main
@@ -30,7 +30,7 @@ pipelines:
                 - script: |
                     /devinfra/scripts/checks/githubactions/checkruns.py \
                     getsentry/session-replay-analyzer \
-                    ${GO_REVISION_session-replay-analyzer_REPO} \
+                    ${GO_REVISION_SESSION_REPLAY_ANALYZER_REPO} \
                     "build-image (amd64)"
                 - script: |
                     /devinfra/scripts/checks/googlecloud/checkcloudbuild.py \
