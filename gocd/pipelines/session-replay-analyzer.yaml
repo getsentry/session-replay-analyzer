@@ -18,7 +18,7 @@ pipelines:
       session-replay-analyzer_repo:
         git: git@github.com:getsentry/session-replay-analyzer.git
         shallow_clone: true
-        branch: master
+        branch: main
         destination: session-replay-analyzer
     stages:
       - checks:
