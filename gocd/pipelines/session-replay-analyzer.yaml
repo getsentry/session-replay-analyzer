@@ -15,7 +15,7 @@ pipelines:
     group: session-replay-analyzer
     lock_behavior: unlockWhenFinished
     materials:
-      session_replay_analyzer_repo:
+      session-replay-analyzer_repo:
         git: git@github.com:getsentry/session-replay-analyzer.git
         shallow_clone: true
         branch: main
