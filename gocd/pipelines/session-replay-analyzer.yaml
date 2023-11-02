@@ -5,7 +5,7 @@ format_version: 10
 pipelines:
   deploy-session-replay-analyzer:
     environment_variables:
-      GCP_PROJECT: sentryio
+      GCP_PROJECT: internal-sentry
       GKE_CLUSTER: zdpwkxst
       GKE_REGION: us-central1
       GKE_CLUSTER_ZONE: b

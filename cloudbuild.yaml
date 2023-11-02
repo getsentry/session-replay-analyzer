@@ -4,7 +4,7 @@ steps:
       [
         "build",
         "-t",
-        "us.gcr.io/sentryio/session-replay-analyzer:$COMMIT_SHA",
+        "us.gcr.io/internal-sentry/session-replay-analyzer:$COMMIT_SHA",
         ".",
       ]
-images: ["us.gcr.io/sentryio/session-replay-analyzer:$COMMIT_SHA"]
+images: ["us.gcr.io/internal-sentry/session-replay-analyzer:$COMMIT_SHA"]
