@@ -30,7 +30,7 @@ pipelines:
                 - script: |
                     /devinfra/scripts/checks/githubactions/checkruns.py \
                     getsentry/session-replay-analyzer \
-                    ${GO_REVISION_SESSION_REPLAY_ANALYZER_REPO} \
+                    ${GO_REVISION_session-replay-analyzer_REPO} \
                     "build-image (amd64)"
                 - script: |
                     /devinfra/scripts/checks/googlecloud/checkcloudbuild.py \
