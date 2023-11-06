@@ -3,10 +3,13 @@ import * as playwright from 'playwright'
 import { runA11Y } from './accessibility'
 import { newPlayerPage } from './player'
 import { newStorage } from './gcs'
+import * as Sentry from "@sentry/node";
 
 const storage = newStorage()
 
 const app = express()
+app.use(Sentry.Handlers.requestHandler());
+app.use(Sentry.Handlers.tracingHandler());
 app.use(express.json())
 
 app.get('/', (req, res) => {
@@ -53,5 +56,11 @@ app.post('/api/:version/analyze/accessibility', async (req: TypedRequest<Analyze
     await browser.close()
   }
 })
+
+app.use(Sentry.Handlers.errorHandler());
+app.use(function onError(err, req, res, next) {
+    res.statusCode = 500;
+    res.end(res.sentry + "\n");
+});
 
 export { app, storage }
