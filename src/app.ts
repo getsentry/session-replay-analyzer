@@ -29,6 +29,12 @@ interface AnalyzeAcessibilityBodyData {
   filenames: string[]
 }
 
+app.get('/api/:version/test-playwright', async (req, res) => {
+  const browser = await playwright.chromium.launch({ headless: true })
+  await browser.close()
+  res.status(200).send('OK')
+});
+
 app.post('/api/:version/analyze/accessibility', async (req: TypedRequest<AnalyzeAcessibilityBody>, res: Response) => {
   const browser = await playwright.chromium.launch({ headless: true })
 
