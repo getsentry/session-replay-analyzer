@@ -19,7 +19,7 @@ pipelines:
         git: git@github.com:getsentry/session-replay-analyzer.git
         shallow_clone: true
         branch: main
-        destination: session-replay-analyzer
+        destination: replay-analyzer
     stages:
       - checks:
           jobs:
