@@ -10,6 +10,7 @@ RUN rm -rf docs locust player
 RUN npm ci
 RUN npx playwright install --with-deps chromium
 RUN npm run build
+RUN npm run test-playwright
 
 RUN cp -r node_modules dist/node_modules
 
