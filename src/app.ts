@@ -3,10 +3,26 @@ import * as playwright from 'playwright'
 import { runA11Y } from './accessibility'
 import { newPlayerPage } from './player'
 import { newStorage } from './gcs'
+import * as Sentry from "@sentry/node";
+import {SENTRY_DSN, SENTRY_TRACE_SAMPLE_RATE, SENTRY_PROFILE_SAMPLE_RATE} from './config'
+import { ProfilingIntegration } from "@sentry/profiling-node";
 
 const storage = newStorage()
-
 const app = express()
+
+Sentry.init({
+  dsn: SENTRY_DSN,
+  integrations: [
+      new Sentry.Integrations.Http({ tracing: true }),
+      new Sentry.Integrations.Express({ app }),
+      new ProfilingIntegration(),
+  ],
+  tracesSampleRate: SENTRY_TRACE_SAMPLE_RATE,
+  profilesSampleRate: SENTRY_PROFILE_SAMPLE_RATE,
+});
+
+app.use(Sentry.Handlers.requestHandler());
+app.use(Sentry.Handlers.tracingHandler());
 app.use(express.json())
 
 app.get('/', (req, res) => {
@@ -55,5 +71,11 @@ app.post('/api/:version/analyze/accessibility', async (req: TypedRequest<Analyze
     await browser.close()
   }
 })
+
+app.use(Sentry.Handlers.errorHandler());
+app.use(function onError(err, req, res, next) {
+    res.statusCode = 500;
+    res.end(res.sentry + "\n");
+});
 
 export { app, storage }
