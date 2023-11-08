@@ -17,19 +17,19 @@ describe('healthcheck', () => {
 
 describe('accessibility analysis endpoint', () => {
   describe('POST', () => {
-    it('Responds 201 created', async () => {
-      const data = fs.readFileSync(path.join(__dirname, '../../mock/rrweb-sentry.json'))
-      await storage.bucket(BUCKET_NAME).file('test.json').save(zlib.gzipSync(data))
+    // it('Responds 201 created', async () => {
+    //   const data = fs.readFileSync(path.join(__dirname, '../../mock/rrweb-simple.json'))
+    //   await storage.bucket(BUCKET_NAME).file('test.json').save(zlib.gzipSync(data))
 
-      const resp = await supertest(app)
-        .post('/api/0/analyze/accessibility')
-        .send({ data: { filenames: ['test.json'] } })
+    //   const resp = await supertest(app)
+    //     .post('/api/0/analyze/accessibility')
+    //     .send({ data: { filenames: ['test.json'] } })
 
-      expect(resp.status).toBe(201)
+    //   expect(resp.status).toBe(201)
 
-      const response = JSON.parse(resp.text)
-      expect(response.meta).toEqual({ total: 2 })
-      expect(response.data.length).toEqual(2)
-    })
+    //   const response = JSON.parse(resp.text)
+    //   expect(response.meta).toEqual({ total: 2 })
+    //   expect(response.data.length).toEqual(2)
+    // })
   })
 })

@@ -37,18 +37,8 @@ async function runA11Y (storage: IStorage, page: playwright.Page, filenames: str
 }
 
 async function evaluateSnapshots (page: playwright.Page, events: any[]): Promise<AccessiblityIssue[]> {
-  const issues: AccessiblityIssue[] = []
-
-  for (const event of events) {
-    // Window is "guaranteed" to have the "playEvents" function exposed on the window. Or at
-    // least it should because we control the image. I've not found a way to type check this.
-    await playRRWebEvents(page, [event, {}])
-
-    const pageIssues = await runAxe(page, event.timestamp ?? 0)
-    issues.push(...pageIssues)
-  }
-
-  return issues
+  await playRRWebEvents(page, events)
+  return await runAxe(page, 0)
 }
 
 async function runAxe (page: playwright.Page, timestamp: any): Promise<AccessiblityIssue[]> {

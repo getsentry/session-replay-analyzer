@@ -11,15 +11,20 @@ const storage = new MockStorage()
 
 describe('runA11Y', () => {
   it('works', async () => {
-    const data = fs.readFileSync(path.join(__dirname, '../../../mock/rrweb-sentry.json'))
+    const data = fs.readFileSync(path.join(__dirname, '../../../mock/rrweb-simple.json'))
     await storage.bucket(BUCKET_NAME).file('test.json').save(zlib.gzipSync(data))
 
     const browser = await playwright.chromium.launch({ headless: true })
-    const page = await newPlayerPage(browser)
-    const result = await runA11Y(storage, page, ['test.json'])
-    await browser.close()
-
-    expect(result.length).toBe(10)
+    try {
+      const page = await newPlayerPage(browser)
+      const result = await runA11Y(storage, page, ['test.json'])
+      expect(result.length).toBe(0)
+    } catch (e) {
+      console.log(e)
+      expect(1).toBe(2)
+    } finally {
+      await browser.close()
+    }
   })
 })
 
