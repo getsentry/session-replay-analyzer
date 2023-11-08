@@ -16,7 +16,6 @@ async function downloadFromFilenames (storage: IStorage, filenames: string[]): P
 }
 
 async function downloadFromFilename (storage: IStorage, filename: string): Promise<string> {
-  console.log(`downloading ${filename} from ${BUCKET_NAME}`)
   try {
     const response = await storage.bucket(BUCKET_NAME).file(filename).download()
     return zlib.unzipSync(response[0]).toString()

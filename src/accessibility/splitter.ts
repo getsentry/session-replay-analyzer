@@ -6,22 +6,21 @@ function split (segments: string[]): any[] {
   const events: any[] = []
 
   segments.forEach(segment => {
-    // TODO: Unhandled try-catch
     try {
       const segmentEvents = JSON.parse(segment)
       if (segmentEvents instanceof Array) {
         segmentEvents.forEach(event => {
-          if (event.type === 2) {
+          if (event.type === 2 || event.type === 3) {
             events.push(event)
           }
         })
       }
     } catch (e) {
       console.log(e)
+      return []
     }
   })
-
-  return events
+  return events.slice(0, 5);
 }
 
 export { split }

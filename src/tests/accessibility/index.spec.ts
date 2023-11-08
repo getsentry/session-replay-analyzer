@@ -19,7 +19,7 @@ describe('runA11Y', () => {
     const result = await runA11Y(storage, page, ['test.json'])
     await browser.close()
 
-    expect(result.length).toBe(2)
+    expect(result.length).toBe(10)
   })
 })
 

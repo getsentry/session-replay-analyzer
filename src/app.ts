@@ -52,8 +52,6 @@ app.get('/api/:version/test-playwright', async (req, res) => {
 });
 
 app.post('/api/:version/analyze/accessibility', async (req: TypedRequest<AnalyzeAcessibilityBody>, res: Response) => {
-  console.log("recv accessibility request")
-
   const browser = await playwright.chromium.launch({ headless: true })
 
   try {
