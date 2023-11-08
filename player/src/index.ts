@@ -13,7 +13,7 @@ function playEvents (events: any[]): void {
       speedOption: [99999999999],
       skipInactive: true,
       showWarning: false,
-      loadTimeout: 1000,
+      loadTimeout: 0,
     }
   })
   player.play()
