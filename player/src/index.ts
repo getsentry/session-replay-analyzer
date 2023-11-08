@@ -9,11 +9,11 @@ function playEvents (events: any[]): void {
     target: document.body,
     props: {
       events,
-      speed: 999999,
-      speedOption: [999999],
+      speed: 99999999999,
+      speedOption: [99999999999],
       skipInactive: true,
       showWarning: false,
-      loadTimeout: 1000 // timeout to load the stylesheet(s)
+      loadTimeout: 1000,
     }
   })
   player.play()
