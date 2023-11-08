@@ -54,7 +54,7 @@ async function evaluateSnapshots (page: playwright.Page, events: any[]): Promise
 async function runAxe (page: playwright.Page, timestamp: any): Promise<AccessiblityIssue[]> {
   try {
     const results = await new AxeBuilder({ page })
-      .include('.rr-player')
+      .include('.rr-player__frame')
       .disableRules([
         'frame-title',
         'page-has-heading-one',
