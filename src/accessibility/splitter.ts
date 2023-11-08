@@ -8,6 +8,7 @@ function split (segments: string[]): any[] {
   segments.forEach(segment => {
     // TODO: Unhandled try-catch
     try {
+      console.log(segment);
       const segmentEvents = JSON.parse(segment)
       if (segmentEvents instanceof Array) {
         segmentEvents.forEach(event => {
