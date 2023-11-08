@@ -5,13 +5,14 @@ import { coerceTimestamp, runA11Y } from '../../accessibility/index'
 import fs from 'fs'
 import path from 'path'
 import {BUCKET_NAME} from '../../config'
+import zlib from 'zlib'
 
 const storage = new MockStorage()
 
 describe('runA11Y', () => {
   it('works', async () => {
     const data = fs.readFileSync(path.join(__dirname, '../../../mock/rrweb-sentry.json'))
-    await storage.bucket(BUCKET_NAME).file('test.json').save(data)
+    await storage.bucket(BUCKET_NAME).file('test.json').save(zlib.gzipSync(data))
 
     const browser = await playwright.chromium.launch({ headless: true })
     const page = await newPlayerPage(browser)

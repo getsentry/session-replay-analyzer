@@ -3,6 +3,7 @@ import path from 'path'
 import supertest from 'supertest'
 import { app, storage } from '../app'
 import {BUCKET_NAME} from '../config'
+import zlib from 'zlib'
 
 describe('healthcheck', () => {
   describe('GET /api/healthcheck/live', () => {
@@ -18,7 +19,7 @@ describe('accessibility analysis endpoint', () => {
   describe('POST', () => {
     it('Responds 201 created', async () => {
       const data = fs.readFileSync(path.join(__dirname, '../../mock/rrweb-sentry.json'))
-      await storage.bucket(BUCKET_NAME).file('test.json').save(data)
+      await storage.bucket(BUCKET_NAME).file('test.json').save(zlib.gzipSync(data))
 
       const resp = await supertest(app)
         .post('/api/0/analyze/accessibility')

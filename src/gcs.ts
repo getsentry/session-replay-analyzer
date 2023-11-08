@@ -1,6 +1,7 @@
 import { Storage } from '@google-cloud/storage'
 import { MockStorage, type IStorage } from 'mock-gcs'
 import {BUCKET_NAME, ENVIRONMENT} from './config'
+import zlib from 'zlib';
 
 function newStorage(): IStorage {
   if (ENVIRONMENT == "test") {
@@ -18,7 +19,7 @@ async function downloadFromFilename (storage: IStorage, filename: string): Promi
   console.log(`downloading ${filename} from ${BUCKET_NAME}`)
   try {
     const response = await storage.bucket(BUCKET_NAME).file(filename).download()
-    return response.toString()
+    return zlib.unzipSync(response[0]).toString()
   } catch (e) {
     console.log(e)
     return '[]'
