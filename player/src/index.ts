@@ -9,11 +9,13 @@ function playEvents (events: any[]): void {
     target: document.body,
     props: {
       events,
+      autoPlay: false,
+      UNSAFE_replayCanvas: true,
       speed: 99999999999,
       speedOption: [99999999999],
       skipInactive: true,
       showWarning: false,
-      loadTimeout: 0,
+      loadTimeout: 1000,
     }
   })
 
