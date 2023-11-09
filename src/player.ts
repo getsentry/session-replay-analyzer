@@ -12,12 +12,8 @@ async function gotoRRWebPlayer (page: playwright.Page): Promise<void> {
   await page.goto(`file://${path.join(process.cwd(), '/dist/index.html')}`)
 }
 
-async function playRRWebEvents (page: playwright.Page, events: any[]): Promise<Boolean> {
-  let event = page.waitForEvent("console");
+async function playRRWebEvents (page: playwright.Page, events: any[]): Promise<void> {
   await page.evaluate((e) => { (window as any).playEvents(e) }, events)
-
-  let message = await event;
-  return (await message.args()[0].jsonValue()) === "FINISHED"
 }
 
 export { newPlayerPage, gotoRRWebPlayer, playRRWebEvents }

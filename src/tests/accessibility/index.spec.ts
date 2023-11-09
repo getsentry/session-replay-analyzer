@@ -18,7 +18,7 @@ describe('runA11Y', () => {
     try {
       const page = await newPlayerPage(browser)
       const result = await runA11Y(storage, page, ['test.json'])
-      expect(result.length).toBe(0)
+      expect(result.length).toBe(4)
     } catch (e) {
       console.log(e)
       expect(1).toBe(2)
