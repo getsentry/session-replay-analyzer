@@ -4,10 +4,12 @@
   "description": "Session Replay analysis service.",
   "main": "dist/index.js",
   "scripts": {
-    "build": "npm run build --prefix player && cp player/dist/player.js player.js && tsc && cp index.html dist/index.html && cp player.js dist/player.js && cp -r mock dist/mock",
+    "build": "tsc && cp index.html dist/index.html && cp player.js dist/player.js && cp -r mock dist/mock",
     "start": "node dist/src/index.js",
     "lint": "eslint . --ext .ts",
-    "test": "npm run build && jest src/tests",
+    "test": "jest src/tests",
+    "image": "npm run build --prefix player && cp player/dist/player.js player.js && npm run build",
+    "test-local": "npm run image && jest src/tests",
     "test-playwright": "npx playwright test src/playwright_tests",
     "watch": "tsc-watch"
   },
