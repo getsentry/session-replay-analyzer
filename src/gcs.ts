@@ -22,7 +22,6 @@ async function downloadFromFilename (storage: IStorage, filename: string): Promi
     const response = await storage.bucket(BUCKET_NAME).file(filename).download()
     return zlib.unzipSync(response[0]).toString()
   } catch (e) {
-    console.log(e)
     return '[]'
   }
 }

@@ -16,7 +16,18 @@ function playEvents (events: any[]): void {
       loadTimeout: 0,
     }
   })
+
+  // When the player reaches the end-state we can run axe-core.
+  player.addEventListener("ui-update-progress", (state) => {
+    if (state.payload == 1) {
+      console.log("FINISHED")
+    }
+  })
+
   player.play()
+
+  // Run for at most 1000ms.
+  setTimeout(() => {console.log("FINISHED")}, 1000)
 }
 
 // Expose the "playEvents" function on the window. Playwright will host

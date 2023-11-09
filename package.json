@@ -8,6 +8,8 @@
     "start": "node dist/src/index.js",
     "lint": "eslint . --ext .ts",
     "test": "jest src/tests",
+    "image": "npm run build --prefix player && cp player/dist/player.js player.js && npm run build",
+    "test-local": "npm run image && jest src/tests",
     "test-playwright": "npx playwright test src/playwright_tests",
     "watch": "tsc-watch"
   },
