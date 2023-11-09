@@ -26,8 +26,8 @@ function playEvents (events: any[]): void {
 
   player.play()
 
-  // Run for at most 200ms.
-  setTimeout(() => {console.log("FINISHED")}, 200)
+  // Run for at most 1000ms.
+  setTimeout(() => {console.log("FINISHED")}, 1000)
 }
 
 // Expose the "playEvents" function on the window. Playwright will host
