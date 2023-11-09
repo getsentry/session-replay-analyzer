@@ -7,7 +7,7 @@
     "build": "tsc && cp index.html dist/index.html && cp player.js dist/player.js && cp -r mock dist/mock",
     "start": "node dist/src/index.js",
     "lint": "eslint . --ext .ts",
-    "test": "jest src/tests",
+    "test": "npm run build && jest src/tests",
     "test-playwright": "npx playwright test src/playwright_tests",
     "watch": "tsc-watch"
   },
