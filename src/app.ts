@@ -1,4 +1,5 @@
 import express, { type Request, type Response } from 'express'
+import * as fs from 'fs'
 import * as playwright from 'playwright'
 import { runA11Y } from './accessibility'
 import { newPlayerPage } from './player'
@@ -30,7 +31,13 @@ app.get('/', (req, res) => {
 })
 
 app.get('/api/healthcheck/live', (req, res) => {
-  res.status(200).send('OK')
+  fs.access("/tmp/analyzer.down", fs.constants.F_OK, (err) => {
+    if (!err) {
+      res.status(502).send('Downfile Exists')
+    } else {
+      res.status(200).send('OK')
+    }
+  });
 })
 
 interface TypedRequest<T> extends Request {
