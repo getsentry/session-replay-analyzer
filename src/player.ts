@@ -1,10 +1,20 @@
 import type * as playwright from 'playwright'
 import path from 'path'
+import * as Sentry from "@sentry/node";
 
 async function newPlayerPage (browser: playwright.Browser): Promise<playwright.Page> {
-  const context = await browser.newContext()
-  const page = await context.newPage()
-  await gotoRRWebPlayer(page)
+  const context = await Sentry.startSpan({ name: "New Browser Context" }, async () => {
+    return await browser.newContext()
+  })
+
+  const page = await Sentry.startSpan({ name: "New Page" }, async () => {
+    return await context.newPage()
+  })
+
+  await Sentry.startSpan({ name: "Goto RRWeb Page" }, async () => {
+    return await gotoRRWebPlayer(page)
+  })
+
   return page
 }
 
