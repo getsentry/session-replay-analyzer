@@ -30,7 +30,10 @@ interface AccessiblityIssue {
 
 async function runA11Y (storage: IStorage, page: playwright.Page, filenames: string[]): Promise<AccessiblityIssue[]> {
   // Download, parse, and collect the relevant RRWeb events.
-  const segments = await downloadFromFilenames(storage, filenames)
+  const segments = await Sentry.startSpan({ name: "Download Segments" }, async () => {
+    return await downloadFromFilenames(storage, filenames)
+  })
+
   const snapshots = split(segments)
 
   // Run in a loop evaluating each event.
