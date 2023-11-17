@@ -59,7 +59,9 @@ app.get('/api/:version/test-playwright', async (req, res) => {
 });
 
 app.post('/api/:version/analyze/accessibility', async (req: TypedRequest<AnalyzeAcessibilityBody>, res: Response) => {
-  const browser = await playwright.chromium.launch({ headless: true })
+  const browser = await Sentry.startSpan({ name: "Open Browser" }, async () => {
+    return await playwright.chromium.launch({ headless: true })
+  })
 
   try {
     const body = req.body

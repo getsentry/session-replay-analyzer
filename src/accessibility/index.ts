@@ -4,6 +4,7 @@ import { split } from './splitter'
 import { playRRWebEvents } from '../player'
 import { downloadFromFilenames } from '../gcs'
 import { type IStorage } from 'mock-gcs'
+import * as Sentry from "@sentry/node";
 
 type AxeResults = Awaited<ReturnType<AxeBuilder['analyze']>>
 
@@ -29,7 +30,10 @@ interface AccessiblityIssue {
 
 async function runA11Y (storage: IStorage, page: playwright.Page, filenames: string[]): Promise<AccessiblityIssue[]> {
   // Download, parse, and collect the relevant RRWeb events.
-  const segments = await downloadFromFilenames(storage, filenames)
+  const segments = await Sentry.startSpan({ name: "Download Segments" }, async () => {
+    return await downloadFromFilenames(storage, filenames)
+  })
+
   const snapshots = split(segments)
 
   // Run in a loop evaluating each event.
@@ -37,20 +41,22 @@ async function runA11Y (storage: IStorage, page: playwright.Page, filenames: str
 }
 
 async function evaluateSnapshots (page: playwright.Page, events: any[]): Promise<AccessiblityIssue[]> {
-  await playRRWebEvents(page, events)
+  await Sentry.startSpan({ name: "Play RRWeb" }, async () => { await playRRWebEvents(page, events)} )
   return await runAxe(page, 0)
 }
 
 async function runAxe (page: playwright.Page, timestamp: any): Promise<AccessiblityIssue[]> {
   try {
-    const results = await new AxeBuilder({ page })
-      .include('.rr-player__frame')
-      .disableRules([
-        'frame-title',
-        'page-has-heading-one',
-        'landmark-one-main'
-      ])
-      .analyze()
+    const results = await Sentry.startSpan({ name: "Run Axe Core" }, async () => {
+      return await new AxeBuilder({ page })
+        .include('.rr-player__frame')
+        .disableRules([
+          'frame-title',
+          'page-has-heading-one',
+          'landmark-one-main'
+        ])
+        .analyze()
+    })
 
     return processViolations(results, coerceTimestamp(timestamp))
   } catch (e) {
