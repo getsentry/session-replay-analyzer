@@ -10,7 +10,9 @@ function split (segments: string[]): any[] {
       const segmentEvents = JSON.parse(segment)
       if (segmentEvents instanceof Array) {
         segmentEvents.forEach(event => {
-          events.push(event)
+          if (event.type == 1 || event.type == 2 || event.type == 3 || event.type == 4) {
+            events.push(event)
+          }
         })
       }
     } catch (e) {
