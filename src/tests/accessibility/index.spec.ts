@@ -42,3 +42,22 @@ describe('coerceTimestamp', () => {
     expect(coerceTimestamp(null)).toEqual(0)
   })
 })
+
+describe('runA11YLargeReplay', () => {
+  it('works', async () => {
+    const data = fs.readFileSync(path.join(__dirname, '../../../mock/events.json'))
+    await storage.bucket(BUCKET_NAME).file('test.json').save(zlib.gzipSync(data))
+
+    const browser = await playwright.chromium.launch({ headless: true })
+    try {
+      const page = await newPlayerPage(browser)
+      const result = await runA11Y(storage, page, ['test.json'])
+      // expect(result.length).toBe(4)
+    } catch (e) {
+      console.log(e)
+      expect(1).toBe(2)
+    } finally {
+      await browser.close()
+    }
+  }, 1000000)
+})
