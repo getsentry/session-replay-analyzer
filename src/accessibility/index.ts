@@ -54,6 +54,8 @@ async function evaluateSnapshots (page: playwright.Page, events: any[]): Promise
 
 async function runAxe (page: playwright.Page, timestamp: any): Promise<AccessiblityIssue[]> {
   try {
+    console.time('axe')
+
     const results = await Sentry.startSpan({ name: "Run Axe Core" }, async () => {
       return await new AxeBuilder({ page })
         .include('.rr-player__frame')
@@ -64,6 +66,8 @@ async function runAxe (page: playwright.Page, timestamp: any): Promise<Accessibl
         ])
         .analyze()
     })
+    console.timeEnd("axe");
+
 
     return processViolations(results, coerceTimestamp(timestamp))
   } catch (e) {
