@@ -64,6 +64,7 @@ async function runAxe (page: playwright.Page, timestamp: any): Promise<Accessibl
           'page-has-heading-one',
           'landmark-one-main'
         ])
+        .withTags(['wcag2a']) // 3x speedup with this tag
         .analyze()
     })
     console.timeEnd("axe");
