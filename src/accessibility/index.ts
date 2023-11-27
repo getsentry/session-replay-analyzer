@@ -42,7 +42,14 @@ async function runA11Y (storage: IStorage, page: playwright.Page, filenames: str
 
 async function evaluateSnapshots (page: playwright.Page, events: any[]): Promise<AccessiblityIssue[]> {
   await Sentry.startSpan({ name: "Play RRWeb" }, async () => { await playRRWebEvents(page, events)} )
-  return await runAxe(page, 0)
+
+  let timestamp = 0
+
+  events.forEach((event) => {
+    timestamp = Math.max(event.timestamp, timestamp);
+  })
+
+  return await runAxe(page, timestamp)
 }
 
 async function runAxe (page: playwright.Page, timestamp: any): Promise<AccessiblityIssue[]> {
