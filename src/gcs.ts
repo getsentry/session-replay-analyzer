@@ -13,7 +13,7 @@ function newStorage(): IStorage {
 
 async function downloadFromFilenames (storage: IStorage, filenames: string[]): Promise<string[]> {
   // Only fetch the first two segments.
-  filenames = filenames.slice(0, 2);
+  filenames = filenames.slice(0, 5);
   return await Promise.all(filenames.map(async (f) => await downloadFromFilename(storage, f)))
 }
 
