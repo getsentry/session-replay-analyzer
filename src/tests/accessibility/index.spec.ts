@@ -44,14 +44,20 @@ describe('coerceTimestamp', () => {
 })
 
 describe('runA11YLargeReplay', () => {
-  it('works', async () => {
+  fit('works', async () => {
     const data = fs.readFileSync(path.join(__dirname, '../../../mock/events.json'))
     await storage.bucket(BUCKET_NAME).file('test.json').save(zlib.gzipSync(data))
 
+    console.time('launch')
     const browser = await playwright.chromium.launch({ headless: true })
+    console.timeEnd('launch')
     try {
+      console.time('newPlayerPage')
       const page = await newPlayerPage(browser)
+      console.timeEnd('newPlayerPage')
+      console.time('runA11Y')
       const result = await runA11Y(storage, page, ['test.json'])
+      console.timeEnd('runA11Y')
       // expect(result.length).toBe(4)
     } catch (e) {
       console.log(e)

@@ -34,14 +34,19 @@ async function runA11Y (storage: IStorage, page: playwright.Page, filenames: str
     return await downloadFromFilenames(storage, filenames)
   })
 
+  console.time('split')
   const snapshots = split(segments)
+  console.timeEnd('split')
 
   // Run in a loop evaluating each event.
   return await evaluateSnapshots(page, snapshots)
 }
 
 async function evaluateSnapshots (page: playwright.Page, events: any[]): Promise<AccessiblityIssue[]> {
+
+  console.time('playRRWebEvents')
   await Sentry.startSpan({ name: "Play RRWeb" }, async () => { await playRRWebEvents(page, events)} )
+  console.timeEnd('playRRWebEvents')
 
   let timestamp = 0
 
@@ -59,18 +64,24 @@ async function runAxe (page: playwright.Page, timestamp: any): Promise<Accessibl
     const results = await Sentry.startSpan({ name: "Run Axe Core" }, async () => {
       return await new AxeBuilder({ page })
         .include('.rr-player__frame')
+        .withTags(['wcag2a'])
         .disableRules([
           'frame-title',
           'page-has-heading-one',
-          'landmark-one-main'
+          'landmark-one-main',
+          "color-contrast",
+          "duplicate-id-active",
+          "duplicate-id-aria",
+          "duplicate-id",
         ])
-        .withTags(['wcag2a']) // 3x speedup with this tag
         .analyze()
     })
     console.timeEnd("axe");
 
-
-    return processViolations(results, coerceTimestamp(timestamp))
+    console.time('violations')
+    const violations =  processViolations(results, coerceTimestamp(timestamp))
+    console.timeEnd('violations')
+    return violations
   } catch (e) {
     // TODO: Handle axe-core errors.
     console.log(e)
