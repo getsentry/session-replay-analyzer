@@ -1,6 +1,6 @@
 import { Storage } from '@google-cloud/storage'
 import { MockStorage, type IStorage } from 'mock-gcs'
-import {BUCKET_NAME, ENVIRONMENT} from './config'
+import {BUCKET_NAME, ENVIRONMENT, REPLAY_MAX_SEGMENT} from './config'
 import zlib from 'zlib';
 
 function newStorage(): IStorage {
@@ -12,8 +12,7 @@ function newStorage(): IStorage {
 }
 
 async function downloadFromFilenames (storage: IStorage, filenames: string[]): Promise<string[]> {
-  // Only fetch the first two segments.
-  filenames = filenames.slice(0, 5);
+  filenames = filenames.slice(0, REPLAY_MAX_SEGMENT);
   return await Promise.all(filenames.map(async (f) => await downloadFromFilename(storage, f)))
 }
 
