@@ -2,6 +2,7 @@ import { Storage } from '@google-cloud/storage'
 import { MockStorage, type IStorage } from 'mock-gcs'
 import {BUCKET_NAME, ENVIRONMENT, REPLAY_MAX_SEGMENT} from './config'
 import zlib from 'zlib';
+import * as Sentry from "@sentry/node";
 
 function newStorage(): IStorage {
   if (ENVIRONMENT == "test") {
@@ -21,6 +22,11 @@ async function downloadFromFilename (storage: IStorage, filename: string): Promi
     const response = await storage.bucket(BUCKET_NAME).file(filename).download()
     return zlib.unzipSync(response[0]).toString()
   } catch (e) {
+    Sentry.captureException(e, (scope) => {
+      scope.setTag("fileName", filename);
+      scope.setTag("bucketName", BUCKET_NAME);
+      return scope;
+    });
     return '[]'
   }
 }
