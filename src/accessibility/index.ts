@@ -83,8 +83,10 @@ async function runAxe (page: playwright.Page, timestamp: any): Promise<Accessibl
     console.timeEnd('violations')
     return violations
   } catch (e) {
-    // TODO: Handle axe-core errors.
-    console.log(e)
+    Sentry.captureException(e, (scope) => {
+      scope.setTag("page.url", page.url());
+      return scope;
+    });
     return []
   }
 }
