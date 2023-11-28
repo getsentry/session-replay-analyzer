@@ -5,7 +5,7 @@ import { runA11Y } from './accessibility'
 import { newPlayerPage } from './player'
 import { newStorage } from './gcs'
 import * as Sentry from "@sentry/node";
-import {SENTRY_DSN, SENTRY_TRACE_SAMPLE_RATE, SENTRY_PROFILE_SAMPLE_RATE} from './config'
+import {SENTRY_DSN, SENTRY_TRACE_SAMPLE_RATE, SENTRY_PROFILE_SAMPLE_RATE, ENVIRONMENT} from './config'
 import { ProfilingIntegration } from "@sentry/profiling-node";
 
 const storage = newStorage()
@@ -13,6 +13,7 @@ const app = express()
 
 Sentry.init({
   dsn: SENTRY_DSN,
+  environment: ENVIRONMENT,
   integrations: [
       new Sentry.Integrations.Http({ tracing: true }),
       new Sentry.Integrations.Express({ app }),
