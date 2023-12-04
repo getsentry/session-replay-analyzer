@@ -1,6 +1,6 @@
 import { Storage } from '@google-cloud/storage'
 import { MockStorage, type IStorage } from 'mock-gcs'
-import {BUCKET_NAME, ENVIRONMENT, REPLAY_MAX_SEGMENT} from './config'
+import {BUCKET_NAME, ENVIRONMENT} from './config'
 import zlib from 'zlib';
 import * as Sentry from "@sentry/node";
 
@@ -13,7 +13,6 @@ function newStorage(): IStorage {
 }
 
 async function downloadFromFilenames (storage: IStorage, filenames: string[]): Promise<string[]> {
-  filenames = filenames.slice(0, REPLAY_MAX_SEGMENT);
   return await Promise.all(filenames.map(async (f) => await downloadFromFilename(storage, f)))
 }
 
