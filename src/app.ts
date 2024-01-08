@@ -8,8 +8,6 @@ import * as Sentry from "@sentry/node";
 import { SENTRY_DSN, SENTRY_TRACE_SAMPLE_RATE, SENTRY_PROFILE_SAMPLE_RATE, ENVIRONMENT } from './config'
 import { ProfilingIntegration } from "@sentry/profiling-node";
 
-S
-
 const storage = newStorage()
 const app = express()
 
