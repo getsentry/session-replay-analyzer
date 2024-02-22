@@ -25,11 +25,6 @@ local pipedream_config = {
       destination: 'session-replay-analyzer',
     },
   },
-  rollback: {
-    material_name: 'session-replay-analyzer_repo',
-    stage: 'deploy-primary',
-    elastic_profile_id: 'session-replay-analyzer',
-  },
 };
 
 pipedream.render(pipedream_config, session_replay_analyzer)
