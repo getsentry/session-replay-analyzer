@@ -6,9 +6,6 @@ local pipedream = import 'github.com/getsentry/gocd-jsonnet/libs/pipedream.libso
 local pipedream_config = {
   name: 'session-replay-analyzer',
   auto_deploy: true,
-  test_regions: [
-    'de',
-  ],
   exclude_regions: [
     's4s',
     'customer-1',
