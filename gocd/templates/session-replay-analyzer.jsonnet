@@ -1,4 +1,4 @@
-local session_replay_analyzer = import './libs/session-replay-analyzer.libsonnet';
+local session_replay_analyzer = import './pipelines/session-replay-analyzer.libsonnet';
 local pipedream = import 'github.com/getsentry/gocd-jsonnet/libs/pipedream.libsonnet';
 
 // Pipedream can be configured using this object, you can learn more about the
