@@ -4,3 +4,6 @@ dist/
 player/dist/
 env/
 __pycache__/
+
+/gocd/generated-pipelines
+/gocd/templates/vendor
